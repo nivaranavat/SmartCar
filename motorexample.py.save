@@ -1,0 +1,71 @@
+-from adafruit_servokit import ServoKit
+import board
+import busio
+import adafruit_pca9685
+import time
+
+i2c = busio.I2C(board.SCL, board.SDA)
+pca = adafruit_pca9685.PCA9685(i2c)
+
+kit = ServoKit(channels = 16)
+kit.servo[1].set_pulse_width_range(1000,2000)
+
+kit.servo[1].angle = 90
+time.sleep(1)
+kit.servo[1].angle = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""import time
+import RPi.GPIO as GPIO
+
+
+#set up the pins
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(2,GPIO.OUT)
+GPIO.setup(3,GPIO.OUT)
+GPIO.setwarnings(False)
+print("starting motor sequence")
+
+
+while True:
+	try:
+		#makes the motor spin in on direction
+		GPIO.output(2,True)
+		GPIO.output(3,False)
+		time.sleep(3)
+
+		#spin the other direction
+		GPIO.output(2,False)
+		GPIO.output(3,True)
+		time.sleep(3)
+		print("one loop")
+	except: 
+		print("finishing up")
+		GPIO.output(2,False)
+		GPIO.output(3,False)
+		#GPIO.cleanup()
+		quit()
+
+
+"""

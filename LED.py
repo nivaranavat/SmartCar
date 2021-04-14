@@ -10,7 +10,7 @@ class LED:
 	the lights provided on the smart car are adafruit neopixel lights
 	"""
 
-	def __init__(self, pixel_pin, num_pixels, pixel_order):
+	def __init__(self, pixel_pin = board.D18, num_pixels = 8, pixel_order = neopixel.GRB):
 		self.pixel_pin = pixel_pin # the gpio pin number according to the board
 		self.num_pixels = num_pixels #number of led lights 
 		self.pixel_order = pixel_order #color order for the led lights
@@ -19,7 +19,7 @@ class LED:
 		self.pixels =  neopixel.NeoPixel(self.pixel_pin, self.num_pixels, 
 				brightness = 0.2, auto_write = False, pixel_order = self.pixel_order)
 
-	def fillAll(self,color, sleep_time):
+	def fillAll(self,color, sleep_time = 0):
 		"""
 		fill all the pixels with one color
 		param: color a length of 3 pixels represented in the pixel order
@@ -28,7 +28,7 @@ class LED:
 		self.pixels.show()
 		time.sleep(sleep_time)
 
-	def random(self, wait):
+	def random(self, wait = 0):
 		"""
 		random coloring for each of the lights
 		param: wait : the number of time of seconds to keep the lights on
@@ -41,7 +41,7 @@ class LED:
 			self.pixels.show()
 		time.sleep(wait)
 
-	def rainbow(self,iterations,wait):
+	def rainbow(self,iterations = 1,wait = 0):
 		"""
 		cycle around rainbow colors
 		param: iterations number of time you want to cycle through
@@ -63,8 +63,7 @@ class LED:
 		"""
 		turn off all the pixels by setting all pixels to black 0
 		"""
-		self.pixels.fill((0,0,0))
-
+		self.fillAll((0,0,0), 0)
 
 
 

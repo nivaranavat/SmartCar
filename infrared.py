@@ -1,21 +1,36 @@
-
 import RPi.GPIO as IO
-IO.setwarnings(False)
-IO.setmode(IO.BCM)
-IO.setup(14,IO.OUT)
-IO.setup(15,IO.OUT)
-IO.setup(23,IO.OUT)
-IO.setup(17,IO.IN)
-while 1:
+class Infrared:
+	def __init__(self):
+		''' define and sets up the pin '''
 
-	if (IO.input(17)==True):
-		print("got here")
-		IO.output(14,True)
-		IO.output(15,True)
-	if (IO.input(17)==False):
-		print("here")
-		IO.output(15,True)
-		IO.output(14,True)
-		IO.output(23, True)
-		break
-IO.cleanup()
+		IO.setmode(IO.BCM)
+		IO.setup(14,IO.IN)
+		IO.setup(15,IO.IN)
+		IO.setup(23,IO.IN)
+		self.left=IO.input(14)
+		self.middle=IO.input(15)
+		self.right=IO.input(23)
+		
+	def detect(self):
+		self.left=IO.input(14)
+		self.middle=IO.input(15)
+		self.right=IO.input(23)
+		if self.left==True:
+			#motor move left
+			print("move left")
+		if self.middle==True:
+			if self.left==True:
+				self.middle=False
+				print("last was left")
+			if self.right==True:
+				self.middle=False
+				print("last was right")
+			else:
+				#motor move forward
+				print("move forward")
+		if self.right==True:
+			#motor move to the right
+			print("move right")
+		return self.left, self.middle, self.right
+	def stop(self):
+		IO.cleanup()
